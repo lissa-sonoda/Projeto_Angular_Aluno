@@ -1,0 +1,69 @@
+<mat-accordion *ngIf="alunos.length > 0">
+  <mat-expansion-panel *ngFor="let aluno of alunos" (afterExpanded)="save()">
+    <!--(expandedChange)-->
+    <mat-expansion-panel-header>
+      Nome: {{ aluno.nome }}
+    </mat-expansion-panel-header>
+    <form (submit)="atAluno(alunoForm, aluno.nome)" #alunoForm="ngForm">
+      <mat-form-field>
+        <mat-label>RA: {{ aluno.ra }}</mat-label>
+        <input
+          required
+          minlength="8"
+          type="text"
+          matInput
+          placeholder="{{ aluno.ra }}"
+          name="ra"
+          ngModel
+          #ra="ngModel"
+          [disabled]="editar"
+        />
+        <mat-error *ngIf="ra.invalid"> Digite um RA válido </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>Telefone: {{ aluno.fone }}</mat-label>
+        <input
+          required
+          minlength="8"
+          type="text"
+          matInput
+          placeholder="{{ aluno.fone }}"
+          name="fone"
+          ngModel
+          #fone="ngModel"
+          [disabled]="editar"
+        />
+        <mat-error *ngIf="fone.invalid">
+          Digite um número de telefone válido
+        </mat-error>
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <mat-label>E-mail: {{ aluno.email }}</mat-label>
+        <input
+          required
+          type="text"
+          matInput
+          placeholder="{{ aluno.email }}"
+          name="email"
+          ngModel
+          #email="ngModel"
+          [disabled]="editar"
+        />
+        <mat-error *ngIf="email.invalid"> Digite um e-mail válido </mat-error>
+      </mat-form-field>
+      <br />
+      <button color="primary" mat-raised-button [hidden]="btn" (click)="save()">
+        Salvar
+      </button>
+    </form>
+    <mat-action-row>
+      <button mat-button color="primary" (click)="edit()">EDITAR</button>
+      <button mat-button color="warn">DELETAR</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="mat-body-1" style="text-align: center" *ngIf="alunos.length <= 0">
+  Nenhum aluno cadastrado!!!
+</p>
